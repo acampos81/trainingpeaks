@@ -15,6 +15,9 @@
 
 		public List<Workout> Run()
 		{
+			// Sort dates in chronological order before using.
+			_dates.Sort();
+
 			if(_dates.Count == 0)
 			{
 				return _data.GetUserWorkoutsByDate(_userID, DateTime.UnixEpoch, DateTime.UtcNow);

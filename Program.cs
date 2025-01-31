@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using System.Text.Json;
 using CommandLine;
 using CommandLine.Text;
 
@@ -8,7 +9,15 @@ namespace trainingpeaks
 	{
 		static void Main(string[] args)
 		{
-			var dataSrc  = new DataSource();
+			// JSON serialization options to parse data format.
+			var jsonOps = new JsonSerializerOptions();
+			jsonOps.IncludeFields = true;
+			jsonOps.Converters.Add(new DateConverter());
+
+			var users     = JsonSerializer.Deserialize<List<User>>(File.ReadAllText("data/users.json"),         jsonOps);
+			var exercises = JsonSerializer.Deserialize<List<Exercise>>(File.ReadAllText("data/exercises.json"), jsonOps);
+			var workouts  = JsonSerializer.Deserialize<List<Workout>>(File.ReadAllText("data/workouts.json"),   jsonOps);
+			var dataSrc   = new DataSource(users!, exercises!, workouts!);
 
 			// parser setting to override default help text generator.
 			var parser = new Parser((config) => { config.HelpWriter = null; config.GetoptMode = true; });
@@ -82,7 +91,6 @@ namespace trainingpeaks
 				{
 					dates.Add(DateTime.Parse(dStr));
 				}
-				dates.Sort();
 			}
 
 			var userWorkouts = new Dictionary<int, List<Workout>>();

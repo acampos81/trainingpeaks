@@ -13,22 +13,12 @@ namespace trainingpeaks
 		private Dictionary<string, int>   _usersIDsByName;
 		private Dictionary<string, int>   _exerciseIDsByName;
 
-		public DataSource()
+		public DataSource(List<User> users, List<Exercise> exercises, List<Workout> workouts)
 		{
-			// JSON serialization options to parse data format.
-			var jsonOps = new JsonSerializerOptions();
-			jsonOps.IncludeFields = true;
-			jsonOps.Converters.Add(new DateConverter());
-
-			var users     = JsonSerializer.Deserialize<List<User>>(File.ReadAllText("data/users.json"),         jsonOps);
-			var exercises = JsonSerializer.Deserialize<List<Exercise>>(File.ReadAllText("data/exercises.json"), jsonOps);
-			var workouts  = JsonSerializer.Deserialize<List<Workout>>(File.ReadAllText("data/workouts.json"),   jsonOps);
-
 			BuildUserLookups(users!);
 			BuildExerciseLookups(exercises!);
 			BuildWorkoutLookups(workouts!);
 		}
-
 
 		private void BuildUserLookups(List<User> users)
 		{

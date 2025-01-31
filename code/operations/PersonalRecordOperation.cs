@@ -27,16 +27,24 @@ namespace trainingpeaks
 					{
 						foreach(var set in bl.sets)
 						{
-							if(set.weight.HasValue)
+							if(set.reps.HasValue)
 							{
-								if(set.weight.Value > highestWeight)
+								if(set.weight.HasValue)
 								{
-									highestWeight = set.weight.Value;
+									// Reps need to be greater than 0 to count toward personal best.
+									if(set.reps.Value > 0 && set.weight.Value > highestWeight)
+									{
+										highestWeight = set.weight.Value;
+									}
+								}
+								else
+								{
+									Warnings?.AppendLine($"[Warning] workout from {wo.datetime_completed} for exercise {bl.exercise_id} has invalid weight.");
 								}
 							}
 							else
 							{
-								Warnings?.AppendLine($"[Warning] workout from {wo.datetime_completed} for exercise {bl.exercise_id} has invalid weight.");
+								Warnings?.AppendLine($"[Warning] workout from {wo.datetime_completed} for exercise {bl.exercise_id} has invalid reps.");
 							}
 						}
 					}
