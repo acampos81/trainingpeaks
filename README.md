@@ -151,7 +151,7 @@ The following commands and flags were used to answer the test questions provided
 
 #### Using `-r` and `-w` flags to find stats for a single user
 
-The command below is uses the `-r` flag to specify the search will be for exercise **reps**.  It's written in simplest form supported for this application. It can be interpreted as "Calculate the cumulative **reps** for user `5101` (Abby Smith) for exercise `568` (Bench Press)."  It will  include all workout history since no date range was provided.  
+The command below uses the `-r` flag to specify the search will be for exercise **reps**.  It's written in simplest form supported for this application. It can be interpreted as "Calculate the cumulative **reps** for user `5101` (Abby Smith) for exercise `568` (Bench Press)."  It will  include all workout history since no date range was provided.  
 ```dos
 trainingpeaks workouts -r --users 5101 --exercise 568
 ```
