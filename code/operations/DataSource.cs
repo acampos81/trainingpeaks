@@ -145,7 +145,7 @@ namespace trainingpeaks
 			{
 				foreach(Workout wo in workouts)
 				{
-					if( wo.datetime_completed.CompareTo(startDate) >= 0 && 
+					if( wo.datetime_completed.CompareTo(startDate) >= 0 &&
 						wo.datetime_completed.CompareTo(endDate)   <= 0)
 					{
 						userWorkouts.Add(wo);

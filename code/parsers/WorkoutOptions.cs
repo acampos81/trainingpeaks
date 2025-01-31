@@ -5,6 +5,20 @@ namespace trainingpeaks
 	[Verb("workout", HelpText = "Look up workout data for one or more users.")]
 	public class WorkoutOptions
 	{
+		[Option("tw",
+			FlagCounter = true,
+			Required    = true,
+			SetName     = "Total Weight",
+			HelpText    = "The total weight (reps * weight) for an exercise.")]
+		public int TotalWeight { get; set; }
+
+		[Option("pr",
+			FlagCounter = true,
+			Required    = true,
+			SetName     = "Personal Record",
+			HelpText    = "The most weight lifted for an exercise, regarldess of reps.")]
+		public int PersonalRecord { get; set; }
+
 		[Option('u', "users",
 			Required     = true,
 			Separator    = ',',
@@ -28,21 +42,8 @@ namespace trainingpeaks
 		)]
 		public IEnumerable<string>? Dates { get; set; }
 
-		[Option("tw",
-			FlagCounter = true,
-			SetName = "Total Weight",
-			HelpText = "The total weight (reps * weight) for an exercise.")]
-		public int TotalWeight { get; set; }
-
-		[Option("pr",
-			FlagCounter = true,
-			SetName = "Personal Record",
-			HelpText = "The most weight lifted for an exercise, regarldess of reps.")]
-		public int PersonalRecord { get; set; }
-
 		[Option('w',
 			FlagCounter = true,
-			Max = 1,
 			HelpText = "Print Warnings")]
 		public int PrintWarnings { get; set; }
 

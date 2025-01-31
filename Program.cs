@@ -128,7 +128,7 @@ namespace trainingpeaks
 
 			if(workoutOps.PrintWarnings != 0 && warnings.Length > 0)
 			{
-				PrintErrors(warnings);
+				PrintWarnings(warnings);
 			}
 		}
 
@@ -139,15 +139,6 @@ namespace trainingpeaks
 			helpText.Heading     = "TraningPeaks";
 			helpText.Copyright   = "Angel Campos";
 			Console.WriteLine(helpText);
-		}
-
-		static void PrintErrors(StringBuilder errors)
-		{
-			if(errors.Length > 0)
-			{
-				Console.WriteLine($"\nERRORS:");
-				Console.WriteLine(errors.ToString());
-			}
 		}
 
 		static void PrintWarnings(StringBuilder warnings)

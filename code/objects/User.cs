@@ -1,8 +1,5 @@
 ﻿namespace trainingpeaks
 {
-    /// <summary>
-    /// Struct representing a user
-    /// </summary>
     public struct User
     {
         public int id { get; set; }

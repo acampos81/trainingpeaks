@@ -24,7 +24,10 @@
 			}
 			else if(_dates.Count == 1)
 			{
-				return _data.GetUserWorkoutsByDate(_userID, _dates[0], _dates[0]);
+				// Search within the 24 hour window of the date.
+				var startDate = _dates[0];
+				var endDate   = new DateTimeOffset(startDate).AddHours(24).Date;
+				return _data.GetUserWorkoutsByDate(_userID, startDate, endDate);
 			}
 			else if(_dates.Count == 2)
 			{
