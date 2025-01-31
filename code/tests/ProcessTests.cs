@@ -10,6 +10,8 @@ namespace tests
 		[TestMethod]
 		public void PersonalRecordProcess()
 		{
+			var statFlags = StatFlags.Weight;
+
 			var userIDs = new List<int>()
 			{
 				MockData.TestUserID_A,
@@ -47,7 +49,7 @@ namespace tests
 			};
 
 			var dataSrc = MockData.GetDataSource();
-			var jsonStr = ProcessFunctions.ProcessPersonalRecords(userIDs, testID, userWorkouts, dataSrc, null);
+			var jsonStr = ProcessFunctions.ProcessPersonalRecords(userIDs, testID, statFlags, userWorkouts, dataSrc, null);
 			var jsonObj = JsonObject.Parse(jsonStr);
 
 			var outID    = (int)jsonObj!["exercise"]!["id"]!.AsValue();
@@ -64,6 +66,9 @@ namespace tests
 		[TestMethod]
 		public void TotalWeightProcess()
 		{
+			// Flags indicate reps * weight
+			var statFlags = StatFlags.Reps | StatFlags.Weight;
+
 			var userIDs = new List<int>()
 			{
 				MockData.TestUserID_A,
@@ -114,13 +119,13 @@ namespace tests
 			};
 
 			var dataSrc = new DataSource(MockData.GetUsers(), MockData.GetExercises(), testWorkouts);
-			var jsonStr = ProcessFunctions.ProcessTotalWeight(userIDs, testID, userWorkouts, dataSrc, null);
+			var jsonStr = ProcessFunctions.ProcessStatTotal(userIDs, testID, statFlags, userWorkouts, dataSrc, null);
 			var jsonObj = JsonObject.Parse(jsonStr);
 
 			var outID    = (int)jsonObj!["exercise"]!["id"]!.AsValue();
 			var outUsers = jsonObj!["users"]!.AsArray();
-			var twA      = (float)outUsers[0]!["total_weight"]!.AsValue();
-			var twB      = (float)outUsers[1]!["total_weight"]!.AsValue();
+			var twA      = (float)outUsers[0]![statFlags.ToJsonValue()]!.AsValue();
+			var twB      = (float)outUsers[1]![statFlags.ToJsonValue()]!.AsValue();
 			var twAB     = twA + twB;
 
 			Assert.AreEqual(outID, testID);

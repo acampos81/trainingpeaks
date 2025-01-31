@@ -2,22 +2,24 @@
 
 namespace trainingpeaks
 {
-    public class TotalWeightOperation : IDataOperation<float>, ILogWarnings
+    public class StatSumOperation : IDataOperation<float>, ILogWarnings
 	{
 		public  StringBuilder? Warnings { get; set; }
 
 		private int            _exerciseID;
+		private StatFlags      _statFlags;
 		private List<Workout>  _workouts;
 
-		public TotalWeightOperation(int exerciseID, List<Workout> workouts)
+		public StatSumOperation(int exerciseID, StatFlags statFlags, List<Workout> workouts)
 		{
 			_exerciseID = exerciseID;
+			_statFlags  = statFlags;
 			_workouts   = workouts;
 		}
 
 		public float Run()
 		{
-			float totalWeight = 0f;
+			float statSum = 0f;
 
 			foreach(var wo in _workouts)
 			{
@@ -31,7 +33,18 @@ namespace trainingpeaks
 							{
 								if(set.weight.HasValue)
 								{
-									totalWeight += set.reps.Value * set.weight.Value;
+									if(_statFlags == (StatFlags.Reps | StatFlags.Weight))
+									{
+										statSum += set.reps.Value * set.weight.Value;
+									}
+									else if((_statFlags & StatFlags.Reps) > 0)
+									{
+										statSum += set.reps.Value;
+									}
+									else
+									{
+										statSum += set.weight.Value;
+									}
 								}
 								else
 								{
@@ -47,7 +60,7 @@ namespace trainingpeaks
 				}
 			}
 
-			return totalWeight;
+			return statSum;
 		}
 	}
 }

@@ -68,6 +68,16 @@ namespace trainingpeaks
 		{
 			StringBuilder warnings = new StringBuilder();
 
+			StatFlags statFlags = StatFlags.None;
+
+			if(workoutOps.Reps   != 0) statFlags |= StatFlags.Reps;
+			if(workoutOps.Weight != 0) statFlags |= StatFlags.Weight;
+
+			if(statFlags == StatFlags.None)
+			{
+				throw new Exception($"Cannot run workout process with stat flags {statFlags}");
+			}
+
 			var userIDs = new List<int>();
 			foreach(var id in workoutOps.UserIDs!)
 			{
@@ -109,12 +119,12 @@ namespace trainingpeaks
 			if(workoutOps.PersonalRecord != 0)
 			{
 				fileName = "personal_records.json";
-				jsonStr  = ProcessFunctions.ProcessPersonalRecords(userIDs, exerciseID, userWorkouts, dataSrc, warnings);
+				jsonStr  = ProcessFunctions.ProcessPersonalRecords(userIDs, exerciseID, statFlags, userWorkouts, dataSrc, warnings);
 			}
-			else if(workoutOps.TotalWeight != 0)
+			else
 			{
 				fileName = "total_weight.json";
-				jsonStr  = ProcessFunctions.ProcessTotalWeight(userIDs, exerciseID, userWorkouts, dataSrc, warnings);
+				jsonStr  = ProcessFunctions.ProcessStatTotal(userIDs, exerciseID, statFlags, userWorkouts, dataSrc, warnings);
 			}
 
 			if(jsonStr.Length > 0)

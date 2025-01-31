@@ -5,32 +5,36 @@ namespace trainingpeaks
 	[Verb("workout", HelpText = "Look up workout data for one or more users.")]
 	public class WorkoutOptions
 	{
-		[Option("tw",
+		[Option('r',
 			FlagCounter = true,
-			Required    = true,
-			SetName     = "Total Weight",
-			HelpText    = "The total weight (reps * weight) for an exercise.")]
-		public int TotalWeight { get; set; }
+			Group       = "Stats Flags",
+			HelpText    = "The amount reps completed for an exercise.")]
+		public int Reps { get; set; }
+
+		[Option('w',
+			FlagCounter = true,
+			Group       = "Stats Flags",
+			HelpText    = "The amount of weight lifted for an exercise.")]
+		public int Weight { get; set; }
 
 		[Option("pr",
 			FlagCounter = true,
-			Required    = true,
 			SetName     = "Personal Record",
-			HelpText    = "The most weight lifted for an exercise, regarldess of reps.")]
+			HelpText    = "The personal record for an exercise.")]
 		public int PersonalRecord { get; set; }
 
-		[Option('u', "users",
+		[Option("users",
 			Required     = true,
 			Separator    = ',',
 			HelpText     = "Specify one or more users by ID.\n" +
-			"Multiple IDs must be comma delimeted (e.g. 1234,9876,4545)"
+			"Multiple IDs must be comma delimited (e.g. 1234,9876,4545)"
 		)]
 		public IEnumerable<int> UserIDs { get; set; }
 
-		[Option('e', "exercise", Required = true, HelpText = "Specify an exercises by ID")]
+		[Option("exercise", Required = true, HelpText = "Specify an exercises by ID")]
 		public int ExcerciseID { get; set; }
 
-		[Option('d', "dates",
+		[Option("dates",
 			Min       = 1,
 			Max       = 2,
 			Separator = ' ',
@@ -38,16 +42,16 @@ namespace trainingpeaks
 			"Specify a date, or date range with format: yyyy-mm-dd.\n\t"+
 			"Valid ranges:\n\t\t"+
 			"2025-01-01            Finds workouts on a specific date.\n\t\t"+
-			"2025-01-01 2025-01-31 Finds workouts within a date range.\n\t\t"
+			"2025-01-01 2025-01-31 Finds workouts within a date range."
 		)]
 		public IEnumerable<string>? Dates { get; set; }
 
-		[Option('w',
+		[Option('W',
 			FlagCounter = true,
 			HelpText = "Print Warnings")]
 		public int PrintWarnings { get; set; }
 
-		[Option('o', "output", HelpText = "Output file path.")]
+		[Option('o', HelpText = "Output file path.")]
 		public string? OutputPath { get; set; }
 	}
 }

@@ -61,11 +61,12 @@ namespace tests
 		}
 
 		[TestMethod]
-		public void FindPersonalRecord()
+		public void FindPersonalWeightRecord()
 		{
-			var workouts = MockData.GetWorkoutsUserA();
-			var testPr   = 10000f;
-			var testID   = workouts[0].blocks[0].exercise_id;
+			var workouts  = MockData.GetWorkoutsUserA();
+			var testPr    = 10000f;
+			var testID    = workouts[0].blocks[0].exercise_id;
+			var statFlags = StatFlags.Weight;
 
 			// Set a known personal record for this test
 			workouts[0].blocks[0].sets = new List<Set>()
@@ -96,13 +97,13 @@ namespace tests
 				}
 			};
 
-			var prOp      = new PersonalRecordOperation(testID, workouts);
+			var prOp      = new PersonalRecordOperation(testID, statFlags, workouts);
 			prOp.Warnings = new System.Text.StringBuilder();
 			var pr        = prOp.Run();
 			int warning1  = prOp.Warnings.ToString().IndexOf("Warning");
 			int warning2  = prOp.Warnings.ToString().LastIndexOf("Warning");
 
-			Assert.AreEqual(pr, testPr, $"Personal record {pr} does not match expected value of {testPr}");
+			Assert.AreEqual(pr.Item1, testPr, $"Personal record {pr.Item1} does not match expected value of {testPr}");
 			Assert.IsFalse(string.IsNullOrEmpty(prOp.Warnings.ToString()), "No warnings were generated for invalid data");
 			Assert.IsTrue(warning1 != warning2, "Two expected warnings were not generated for invalid data");
 		}
@@ -113,9 +114,10 @@ namespace tests
 			var workouts = MockData.GetWorkoutsUserA();
 
 			// Use a single test workout and set a known total weight
-			var testList = new List<Workout>(){workouts[0]};
-			var testID   = 1;
-			var testTw   = 300;
+			var testList  = new List<Workout>(){workouts[0]};
+			var testID    = 1;
+			var testTw    = 300;
+			var statFlags = StatFlags.Reps | StatFlags.Weight;
 
 			// Set a known number of exercise blocks for this test
 			testList[0].blocks = new List<ExerciseBlock>()
@@ -153,7 +155,7 @@ namespace tests
 				}
 			};
 
-			var twOp      = new TotalWeightOperation(testID, testList);
+			var twOp      = new StatSumOperation(testID, statFlags ,testList);
 			twOp.Warnings = new System.Text.StringBuilder();
 			var tw        = twOp.Run();
 			int warning1  = twOp.Warnings.ToString().IndexOf("Warning");
