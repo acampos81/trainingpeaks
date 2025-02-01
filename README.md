@@ -161,7 +161,7 @@ To change the search critera to exercise **weight**, use the flag `-w`.
 trainingpeaks workouts -w --users 5101 --exercise 568
 ```
 
-To include multiple users, provide a comma-delimited list of users to as an arument to the `--users` option.
+To include multiple users, provide a comma-delimited list of users as an arument to the `--users` option.
 ```dos
 trainingpeaks workouts -r --users 5101,9705 --exercise 568
 ```

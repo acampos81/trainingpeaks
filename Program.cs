@@ -5,7 +5,7 @@ using CommandLine.Text;
 
 namespace trainingpeaks
 {
-    class Program
+	class Program
 	{
 		static void Main(string[] args)
 		{
@@ -115,15 +115,12 @@ namespace trainingpeaks
 			}
 
 			var jsonStr  = string.Empty;
-			var fileName = string.Empty;
 			if(workoutOps.PersonalRecord != 0)
 			{
-				fileName = "personal_records.json";
 				jsonStr  = ProcessFunctions.ProcessPersonalRecords(userIDs, exerciseID, statFlags, userWorkouts, dataSrc, warnings);
 			}
 			else
 			{
-				fileName = "total_weight.json";
 				jsonStr  = ProcessFunctions.ProcessStatTotal(userIDs, exerciseID, statFlags, userWorkouts, dataSrc, warnings);
 			}
 
@@ -131,7 +128,7 @@ namespace trainingpeaks
 			{
 				if(string.IsNullOrEmpty(workoutOps.OutputPath) == false)
 				{
-					FileWriter.WriteJson(workoutOps.OutputPath, fileName ,jsonStr);
+					FileWriter.WriteJson(workoutOps.OutputPath ,jsonStr);
 				}
 				Console.WriteLine($"output:\n{jsonStr}");
 			}

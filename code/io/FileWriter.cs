@@ -8,19 +8,16 @@ namespace trainingpeaks
 		/// Writes a JSON file to the specified path.
 		/// </summary>
 		/// <param name="filePath"></param>
-		/// <param name="fileName"></param>
 		/// <param name="fileContents"></param>
-		public static void WriteJson(string filePath, string fileName, string fileContents)
+		public static void WriteJson(string filePath, string fileContents)
 		{
 			ConsoleKeyInfo keyInfo;
 
-			var fullPath = Path.Combine(filePath,fileName);
-
-			if(File.Exists(fullPath))
+			if(File.Exists(filePath))
 			{
 				do
 				{
-					Console.WriteLine($"File {fileName} exists at path. Overwrite? y/n");
+					Console.WriteLine($"{filePath} already exists. Overwrite? y/n");
 					keyInfo = Console.ReadKey();
 					Console.Clear();
 					if (keyInfo.Key == ConsoleKey.N)
@@ -32,8 +29,8 @@ namespace trainingpeaks
 				while (keyInfo.Key != ConsoleKey.Y);
 			}
 
-			File.WriteAllText(fullPath, fileContents, Encoding.UTF8);
-			Console.WriteLine($"File saved at path: {fullPath}");
+			File.WriteAllText(filePath, fileContents, Encoding.UTF8);
+			Console.WriteLine($"File saved at path: {filePath}");
 		}
 	}
 }
