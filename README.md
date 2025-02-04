@@ -10,6 +10,24 @@ This console application can be used to lookup the following data for a single u
 
 **Personal Record** - The highest amount of **reps**, **weight**, or **total weight** a user has achieved for a given exercise.
 
+## Running The App
+
+#### Building project with `dotnet`
+
+
+
+If opting to build the project from source, the following sequence of commands will build a release version and navigate to the app:
+
+```dos
+> dotnet build --configuration Release 
+> cd bin\Release\net8.0
+> .\trainingpeaks --help
+```
+
+#### Downloading the release `.zip` file.
+
+Alternatively, the release version can be downloaded in [releases section of this repo](https://github.com/acampos81/trainingpeaks/releases/tag/release-1.2).  Once the `.zip` file is extracted, navigate to the `trainingpeaks` directory to run commands.
+
 ## Test Questions JSON Output
 
 The following commands and flags were used to answer the test questions provided.  Console command instructions are provided in the **How To** section further below.
